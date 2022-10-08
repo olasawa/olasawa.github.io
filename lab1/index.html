@@ -35,7 +35,7 @@
     <input type="text" id="path3" name="path3" pattern="^\/etc\/[A-Za-z]+$" required>
     <br>
     <label>IPv6:</label>
-    <input type="text" id="ipv6" name="ipv6" pattern="^([a-fA-F0-9:]+:+)[a-fA-F0-9)+$" required>
+    <input type="text" id="ipv6" name="ipv6" pattern="^([a-fA-F0-9:]+:+)[a-fA-F0-9]+$" required>
     <br>
     <label>Telefon:</label>
     <input type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" required>
@@ -56,6 +56,5 @@
         }
     </script>
     <button id="btn" onClick=fill()>Wypełnij</button>
-
 </body>
 </html>
