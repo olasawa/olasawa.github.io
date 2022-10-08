@@ -1,14 +1,14 @@
-$("#btn").click(function() {
-    $("#email").val("abc@gmail.com");
-    $("#post_code").val("87-100");
-    $("#nip").val("123-123-12-12");
-    $("#id_num").val("ABC100001")
-    $("#ipv4").val("111.11.111.11");
-    $("#web").val("https://weeia.p.lodz.pl/");
-    $("#path").val("C:\win")
-    $("#path2").val("C:\WindowS");
-    $("#path3").val("/etc/passwd");
-    $("#ipv6").val("");
-    $("#phone").val("123-123-123");
-  });
+function fill() {
+    document.getElementById('email').value="abc@gmail.com";
+    document.getElementById('post_code').value="87-100";
+    document.getElementById('nip').value="123-123-12-12";
+    document.getElementById('id_num').value="ABC100001";
+    document.getElementById('ipv4').value="198.12.121.11";
+    document.getElementById('web').value="https://weeia.p.lodz.pl/";
+    document.getElementById('path').value="C:\win";
+    document.getElementById('path2').value="C:\WinDowS";
+    document.getElementById('path3').value="/etc/passwd";
+    document.getElementById('ipv6').value="2001:db8::1428:57ab";
+    document.getElementById('phone').value="123-123-123";
+  }
   

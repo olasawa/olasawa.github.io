@@ -26,13 +26,13 @@
     <input type="url" id="web" name="web" required>
     <br>
     <label>Ścieżka:</label>
-    <input type="text" id="" name="path" required>
+    <input type="text" id="path" name="path" required>
     <br>
     <label>Ścieżka duże i małe litery:</label>
-    <input type="text" name="path2" required>
+    <input type="text" id="path2" name="path2" required>
     <br>
     <label>Ścieżka do etc:</label>
-    <input type="text" name="path3" required>
+    <input type="text" id="path3" name="path3" required>
     <br>
     <label>IPv4:</label>
     <input type="text" id="ipv6" name="ipv6" required>
@@ -40,7 +40,7 @@
     <label>Telefon:</label>
     <input type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" required>
     <br>
-    <button id="btn">Wypełnij</button>
+    <button id="btn" onClick=fill()>Wypełnij</button>
     <script src="script.js"></script>
 </body>
 </html>
