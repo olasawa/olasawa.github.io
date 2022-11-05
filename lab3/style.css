@@ -30,13 +30,21 @@ body {
     background-color: #f5d491;
  }
 
+.btn{
+    display: grid;
+    flex-direction: column;
+    background-color: #683fff;
+    width:100%
+}
+
+.button{
+    width: 20%;
+}
+
 .listelem{
     cursor: move;
 }
 
- .btn{
-
- }
 
 
 

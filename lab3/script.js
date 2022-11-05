@@ -1,5 +1,14 @@
-function drawRect(){
+function randomColor(){
+    const randomColor = Math.floor(Math.random()*16777215).toString(16);
+}
 
+function drawRect(){
+    var c = document.getElementById("rect-area");
+    var ctx = c.getContext("2d");
+    ctx.beginPath();
+    ctx.rect(20, 20, 150, 100);
+    ctx.fillRect(20, 20, 150, 100);
+    ctx.stroke();
 }
 
 function handleDragStart(e) {
@@ -25,21 +34,21 @@ function handleDragOver(e) {
   }
 
 function handleDragEnter(e) {
-this.classList.add('over');
+    this.classList.add('over');
 }
 
 function handleDragLeave(e) {
-this.classList.remove('over');
+    this.classList.remove('over');
 }
 
 function handleDrop(e) {
-e.stopPropagation();
-if (dragSrcEl !== this) {
-    dragSrcEl.innerHTML = this.innerHTML;
-    this.innerHTML = e.dataTransfer.getData('text/html');
-  }
+    e.stopPropagation();
+    if (dragSrcEl !== this) {
+        dragSrcEl.innerHTML = this.innerHTML;
+        this.innerHTML = e.dataTransfer.getData('text/html');
+    }
 
-return false;
+    return false;
 }
 
 let items = document.querySelectorAll('.list .listelem')
