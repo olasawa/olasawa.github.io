@@ -7,6 +7,18 @@
 </head>
 <body>
 
+<div class="header">
+    <text>Fill form to add client:</text>
+</div>
+<div class="form">
+    <label>ID: </label> 
+    <input id="add_id" type="text" placeholder="1" pattern="[0-9]"><br><br>
+    <label>Imie: </label> 
+    <input id="add_name" type="text" placeholder="Jan" pattern="[a-zA-Z]"><br><br>
+    <label>Nazwisko: </label> 
+    <input id="add_surname" type="text" placeholder="Kowalski" pattern="[a-zA-Z]"><br><br>
+    <button id="button" onClick=addClient()>Dodaj klienta</button>
+</div>
 <div class="list-area">
     <ol class="list">
         <!-- contenteditable="true" -->
@@ -20,7 +32,9 @@
 </div>
 
 
-<button id="button" onClick=addClient()>Dodaj klienta</button>
+
+<br>
+<input id="delete_id" type="text" placeholder="ID">
 <button id="button" onClick=removeClient()>Usun klienta</button>
 
   

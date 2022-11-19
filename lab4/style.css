@@ -2,6 +2,20 @@ body {
     margin: 0;
     min-width: 250px;
 }
+/* Style the header */
+.header {
+    background-color: #3993fb;
+    padding: 30px 40px;
+    color: white;
+    text-align: center;
+  }
+  
+.form {
+    background-color: #1e2833;
+    padding: 10px 10px;
+    color: white;
+    text-align: left;
+}
 
 .listelem{
     cursor: move;
