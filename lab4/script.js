@@ -95,10 +95,15 @@ function removeClient(){
   var request = db.transaction(["clientList"], "readwrite")
   .objectStore("clientList")
   .delete(clientID);
+
   request.onsuccess = function (event) {
     createList();
     document.getElementById('delete_id').value="";
   };
+
+  request.onerror = function (event) {
+    alert("Id must exist in list!");
+}
 }
 
 
