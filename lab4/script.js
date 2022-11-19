@@ -4,12 +4,16 @@ window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndex
 window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
 window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange
 
+const list = document.getElementById('list');
+const id = document.getElementById('add_id');
+const name = document.getElementById('add_name');
+const lastname = document.getElementById('add_lastname');
 
-const clientsList = [{id:"1", name:"Jan", lastname:"Kowalski", email:"abc@wp.pl", }];
+const clientsList = [{id:"1", name:"Jan", lastname:"Kowalski"}];
 
 
 let db;
-var request = window.indexedDB.open("newDatabase", 10);
+var request = window.indexedDB.open("clientList", 10);
 request.onerror = function (event) {
   console.log("error: The database is opened failed");
 };
@@ -17,12 +21,12 @@ request.onerror = function (event) {
 request.onsuccess = function (event) {
   db = request.result;
   console.log("success: The database " + db + " is opened successfully");
-  // createList();
+  createList();
 };
 
 request.onupgradeneeded = function (event) {
   var db = event.target.result;
-  var objectStore = db.createObjectStore("client", {
+  var objectStore = db.createObjectStore("clientList", {
     keyPath: "id"
   });
 
@@ -32,16 +36,40 @@ request.onupgradeneeded = function (event) {
 
 }
 
-function createTable(){
-  
+function createListItem(contents) {
+  const listItem = document.createElement('li');
+  listItem.textContent = contents;
+  return listItem;
+};
+
+function createList(){
+  while (list.firstChild) {
+    list.removeChild(list.lastChild);
+  }
+
+  let objectStore = db.transaction("clientList").objectStore("clientList");
+
+  objectStore.openCursor().onsuccess = function (event) {
+    var cursor = event.target.result;
+
+      const {id, name, lastname} = cursor.value;
+      
+      // Build the list entry and put it into the list item.
+      const elemText = `${id} — ${name}, ${lastname}`;
+      const listItem = createListItem(elemText);
+      listItem.style.color = 'rgba(0, 0, 0, 1)';
+      list.appendChild(listItem);
+  };
+  cursor.continue();
+
 }
 
 function addClient(){
   var clientID = $('#add_id').val();
   var name = $('#add_name').val();
   var lastname = $('#add_lastname').val();
-  var request = db.transaction(["client"], "readwrite")
-      .objectStore("clientsList")
+  var request = db.transaction(["clientList"], "readwrite")
+      .objectStore("clientList")
       .add({
           id: clientID,
           name: name,
@@ -50,7 +78,7 @@ function addClient(){
 
 
   request.onsuccess = function (event) {
-      // createList();
+      createList();
       // clean labels
   };
 
