@@ -1,15 +1,78 @@
-//prefixes of implementation that we want to test
 window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
 
-//prefixes of window.IDB objects
+
 window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
 window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange
 
-const client = [{id:"1", name:"Jan", surname:"Kowalski", email:"abc@wp.pl", }];
 
-var db;
-var request = window.indexedDB.open("newDatabase", 1);
+const clientsList = [{id:"1", name:"Jan", lastname:"Kowalski", email:"abc@wp.pl", }];
 
+
+let db;
+var request = window.indexedDB.open("newDatabase", 10);
+request.onerror = function (event) {
+  console.log("error: The database is opened failed");
+};
+
+request.onsuccess = function (event) {
+  db = request.result;
+  console.log("success: The database " + db + " is opened successfully");
+  // createList();
+};
+
+request.onupgradeneeded = function (event) {
+  var db = event.target.result;
+  var objectStore = db.createObjectStore("client", {
+    keyPath: "id"
+  });
+
+  for (var i in clientsList) {
+    objectStore.add(clientsList[i]);
+  }
+
+}
+
+function createTable(){
+  
+}
+
+function addClient(){
+  var clientID = $('#add_id').val();
+  var name = $('#add_name').val();
+  var lastname = $('#add_lastname').val();
+  var request = db.transaction(["client"], "readwrite")
+      .objectStore("clientsList")
+      .add({
+          id: clientID,
+          name: name,
+          lastname: lastname,
+      });
+
+
+  request.onsuccess = function (event) {
+      // createList();
+      // clean labels
+  };
+
+  request.onerror = function (event) {
+      alert("error");
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ----------------------------------------------
 function handleDragStart(e) {
   this.style.opacity = '0.4';
 
