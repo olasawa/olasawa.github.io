@@ -52,8 +52,10 @@ function createList(){
   objectStore.openCursor().onsuccess = function (event) {
     var cursor = event.target.result;
     if(cursor){
-      const {id, name, lastname} = cursor.value;
-      
+      // const {id, name, lastname} = cursor.value;
+      const id = cursor.value.id;
+      const name = cursor.value.name;
+      const lastname = cursor.value.lastname;
       // Build the list entry and put it into the list item.
       const elemText = `${id} — ${name}, ${lastname}`;
       const listItem = createListItem(elemText);
@@ -65,25 +67,26 @@ function createList(){
 }
 
 function addClient(){
-  var clientID = $('#add_id').val();
-  var name = $('#add_name').val();
-  var lastname = $('#add_lastname').val();
+  var clientID = document.getElementById('add_id').value ;
+  var name = document.getElementById('add_name').value ;
+  var lastname = document.getElementById('add_lastname').value;
   var request = db.transaction(["clientList"], "readwrite")
       .objectStore("clientList")
       .add({
           id: clientID,
           name: name,
-          lastname: lastname,
+          lastname: lastname
       });
-
 
   request.onsuccess = function (event) {
       createList();
-      // clean labels
+      document.getElementById('add_id').value="";
+      document.getElementById('add_name').value="";
+      document.getElementById('add_lastname').value="";
   };
 
   request.onerror = function (event) {
-      alert("error");
+      alert("Id must be unique!");
   }
 }
 
