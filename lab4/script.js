@@ -51,7 +51,7 @@ function createList(){
 
   objectStore.openCursor().onsuccess = function (event) {
     var cursor = event.target.result;
-
+    if(cursor){
       const {id, name, lastname} = cursor.value;
       
       // Build the list entry and put it into the list item.
@@ -59,9 +59,9 @@ function createList(){
       const listItem = createListItem(elemText);
       listItem.style.color = 'rgba(0, 0, 0, 1)';
       list.appendChild(listItem);
+      cursor.continue();
+    }
   };
-  cursor.continue();
-
 }
 
 function addClient(){
