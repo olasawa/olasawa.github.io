@@ -38,6 +38,8 @@ request.onupgradeneeded = function (event) {
 
 function createListItem(contents) {
   const listItem = document.createElement('li');
+  listItem.setAttribute('class', 'listelem');
+  listItem.setAttribute('draggable', 'true');
   listItem.textContent = contents;
   return listItem;
 };
@@ -52,11 +54,9 @@ function createList(){
   objectStore.openCursor().onsuccess = function (event) {
     var cursor = event.target.result;
     if(cursor){
-      // const {id, name, lastname} = cursor.value;
       const id = cursor.value.id;
       const name = cursor.value.name;
       const lastname = cursor.value.lastname;
-      // Build the list entry and put it into the list item.
       const elemText = `${id} — ${name}, ${lastname}`;
       const listItem = createListItem(elemText);
       listItem.style.color = 'rgba(0, 0, 0, 1)';
@@ -90,7 +90,16 @@ function addClient(){
   }
 }
 
-
+function removeClient(){
+  var clientID = document.getElementById('delete_id').value;
+  var request = db.transaction(["clientList"], "readwrite")
+  .objectStore("clientList")
+  .delete(clientID);
+  request.onsuccess = function (event) {
+    createList();
+    document.getElementById('delete_id').value="";
+  };
+}
 
 
 
@@ -104,6 +113,18 @@ function addClient(){
 
 
 // ----------------------------------------------
+let items = document.querySelectorAll('.list .listelem')
+
+items.forEach(item => {
+
+item.addEventListener('dragstart', handleDragStart)
+item.addEventListener('dragend', handleDragEnd)
+item.addEventListener('dragover', handleDragOver);
+item.addEventListener('dragenter', handleDragEnter);
+item.addEventListener('dragleave', handleDragLeave);
+item.addEventListener('drop', handleDrop);
+})
+
 function handleDragStart(e) {
   this.style.opacity = '0.4';
 
@@ -143,16 +164,3 @@ function handleDrop(e) {
 
     return false;
 }
-
-let items = document.querySelectorAll('.list .listelem')
-
-items.forEach(item => {
-
-item.addEventListener('dragstart', handleDragStart)
-item.addEventListener('dragend', handleDragEnd)
-item.addEventListener('dragover', handleDragOver);
-item.addEventListener('dragenter', handleDragEnter);
-item.addEventListener('dragleave', handleDragLeave);
-item.addEventListener('drop', handleDrop);
-})
- 
