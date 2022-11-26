@@ -140,7 +140,7 @@ function addClient(){
       alert("Id must be unique!");
   }
 }
-
+// var editedClientID = 0;
 function editClient(){
   var clientID = document.getElementById('edit_id').value;
 
@@ -159,24 +159,23 @@ function editClient(){
     document.getElementById('add_phone').value=myRecord.phone;
 
   };
-
-  // var request = db.transaction(["clientList"], "readwrite")
-  // .objectStore("clientList")
-  // .delete(clientID);
-
-  // request.onsuccess = function (event) {
-  //   createList();
-  //   document.getElementById('delete_id').value="";
-  // };
-
-  // request.onerror = function (event) {
-  //   alert("Id must exist in list!");
-  // }
-
 }
 
 function saveClient(){
+  var clientID = document.getElementById('edit_id').value;
+  var request = db.transaction(["clientList"], "readwrite")
+  .objectStore("clientList")
+  .delete(clientID);
 
+  request.onsuccess = function (event) {
+    document.getElementById('edit_id').value="";
+  };
+
+  request.onerror = function (event) {
+    alert("Id must exist in list!");
+  }
+  document.getElementById('add_id').value = clientID;
+  addClient();
 }
 
 function removeClient(){
