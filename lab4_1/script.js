@@ -85,6 +85,27 @@ function createList(){
   };
 }
 
+function generateClient(){
+  const random = Math.floor(Math.random() * ids.length);
+  var clientID = ids[random]; //replace with rand
+  var name = names[random];
+  var lastname = lastnames[random];
+  var id_num = id_nums[random];
+  var postcode = postcodes[random];
+  var email = emails[random];
+  var phone = phones[random];
+
+  document.getElementById('add_id').value = clientID;
+  document.getElementById('add_name').value = name;
+  document.getElementById('add_lastname').value=lastname;
+  document.getElementById('add_id_num').value=id_num;
+  document.getElementById('add_post_code').value=postcode;
+  document.getElementById('add_email').value=email;
+  document.getElementById('add_phone').value=phone;
+
+}
+
+
 function addClient(){
   var clientID = document.getElementById('add_id').value ;
   var name = document.getElementById('add_name').value ;
