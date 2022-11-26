@@ -13,7 +13,7 @@ const postcode = document.getElementById('add_post_code');
 const email = document.getElementById('add_email');
 const phone = document.getElementById('add_phone');
 
-const clientsList = [{id:"1", name:"Jan", lastname:"Kowalski",}];
+const clientsList = [{id:"1", name:"Jan", lastname:"Kowalski", id_num:"ABC101010", postcode:"66-400", email:"jan@gmail.com", phone:"666-111-444"}];
 
 
 let db;
@@ -44,6 +44,7 @@ function createListItem(contents) {
   const listItem = document.createElement('li');
   listItem.setAttribute('class', 'listelem');
   listItem.setAttribute('draggable', 'true');
+  // listItem.setAttribute('editable', 'true');
   listItem.textContent = contents;
   return listItem;
 };
@@ -61,7 +62,11 @@ function createList(){
       const id = cursor.value.id;
       const name = cursor.value.name;
       const lastname = cursor.value.lastname;
-      const elemText = `${id} — ${name}, ${lastname}`;
+      const id_num = cursor.value.id_num;
+      const postcode = cursor.value.postcode;
+      const email = cursor.value.email;
+      const phone = cursor.value.phone;
+      const elemText = `${id} — ${name}, ${lastname}, ${id_num}, ${postcode}, ${email}, ${phone}`;
       const listItem = createListItem(elemText);
       listItem.style.color = 'rgba(0, 0, 0, 1)';
       list.appendChild(listItem);
@@ -74,12 +79,20 @@ function addClient(){
   var clientID = document.getElementById('add_id').value ;
   var name = document.getElementById('add_name').value ;
   var lastname = document.getElementById('add_lastname').value;
+  var id_num = document.getElementById('add_id_num').value;
+  var postcode = document.getElementById('add_post_code').value;
+  var email = document.getElementById('add_email').value;
+  var phone = document.getElementById('add_phone').value;
   var request = db.transaction(["clientList"], "readwrite")
       .objectStore("clientList")
       .add({
           id: clientID,
           name: name,
-          lastname: lastname
+          lastname: lastname,
+          id_num: id_num,
+          postcode: postcode,
+          email: email,
+          phone: phone
       });
 
   request.onsuccess = function (event) {
@@ -87,6 +100,10 @@ function addClient(){
       document.getElementById('add_id').value="";
       document.getElementById('add_name').value="";
       document.getElementById('add_lastname').value="";
+      document.getElementById('add_id_num').value="";
+      document.getElementById('add_post_code').value="";
+      document.getElementById('add_email').value="";
+      document.getElementById('add_phone').value="";
   };
 
   request.onerror = function (event) {

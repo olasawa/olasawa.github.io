@@ -1,3 +1,13 @@
+input{
+    margin:10px;
+}
+input:invalid {
+    border-color:red;
+}
+input:valid{
+    border-color:green;
+}
+
 body {
     margin: 0;
     min-width: 250px;
@@ -18,6 +28,13 @@ body {
 }
 .listelem{
     cursor: move;
+}
+
+.baza{
+    background-color: #3993fb;
+    padding: 15px 15px;
+    color: white;
+    text-align: center;
 }
 
 
