@@ -4,6 +4,16 @@ window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndex
 window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
 window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange
 
+//-------------------------------------------------------------------- random database data
+const ids = ["1","2","3","4","5"]; //replace with rand?
+const names = ["Ania", "Frania", "Jan", "Pawel", "Jakub"];
+const lastnames = ["Kot", "Nowak", "Ryba", "Gan", "Kowalski"];
+const id_nums = ["AAA111111", "BBB222222", "CCC333333", "DDD444444", "EEE555555"];
+const postcodes = ["11-222", "22-333", "33-444", "44-555", "55-666"];
+const emails = ["a@gmail.com", "b@gmail.com", "c@gmail.com", "d@gmail.com", "e@gmail.com"];
+const phones = ["600-111-222", "600-222-333", "600-333-444", "600-444-555", "600-555-666"];
+//---------------------------------------------------------------------------------------
+
 const list = document.getElementById('list');
 const id = document.getElementById('add_id');
 const name = document.getElementById('add_name');
