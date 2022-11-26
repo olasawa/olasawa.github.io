@@ -5,7 +5,7 @@ window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || 
 window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange
 
 //-------------------------------------------------------------------- random database data
-const ids = ["1","2","3","4","5"]; //replace with rand?
+const ids = ["6","2","3","4","5"]; //replace with rand?
 const names = ["Ania", "Frania", "Jan", "Pawel", "Jakub"];
 const lastnames = ["Kot", "Nowak", "Ryba", "Gan", "Kowalski"];
 const id_nums = ["AAA111111", "BBB222222", "CCC333333", "DDD444444", "EEE555555"];
@@ -54,7 +54,6 @@ function createListItem(contents) {
   const listItem = document.createElement('li');
   listItem.setAttribute('class', 'listelem');
   listItem.setAttribute('draggable', 'true');
-  // listItem.setAttribute('editable', 'true');
   listItem.textContent = contents;
   return listItem;
 };
@@ -87,7 +86,7 @@ function createList(){
 
 function generateClient(){
   const random = Math.floor(Math.random() * ids.length);
-  var clientID = ids[random]; //replace with rand
+  var clientID = ids[random]; //replace with random
   var name = names[random];
   var lastname = lastnames[random];
   var id_num = id_nums[random];
@@ -140,6 +139,44 @@ function addClient(){
   request.onerror = function (event) {
       alert("Id must be unique!");
   }
+}
+
+function editClient(){
+  var clientID = document.getElementById('edit_id').value;
+
+  var objectStore = db.transaction(["clientList"], "readwrite").objectStore("clientList").get(clientID);
+  // var objectStoreRequest = objectStore.get(clientID);
+  
+  objectStore.onsuccess = function(e) {
+
+    const myRecord = objectStore.result;
+    document.getElementById('add_id').value=myRecord.id;
+    document.getElementById('add_name').value=myRecord.name;
+    document.getElementById('add_lastname').value=myRecord.lastname;
+    document.getElementById('add_id_num').value=myRecord.id_num;
+    document.getElementById('add_post_code').value=myRecord.postcode;
+    document.getElementById('add_email').value=myRecord.email;
+    document.getElementById('add_phone').value=myRecord.phone;
+
+  };
+
+  // var request = db.transaction(["clientList"], "readwrite")
+  // .objectStore("clientList")
+  // .delete(clientID);
+
+  // request.onsuccess = function (event) {
+  //   createList();
+  //   document.getElementById('delete_id').value="";
+  // };
+
+  // request.onerror = function (event) {
+  //   alert("Id must exist in list!");
+  // }
+
+}
+
+function saveClient(){
+
 }
 
 function removeClient(){
