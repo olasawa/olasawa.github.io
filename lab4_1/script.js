@@ -8,8 +8,12 @@ const list = document.getElementById('list');
 const id = document.getElementById('add_id');
 const name = document.getElementById('add_name');
 const lastname = document.getElementById('add_lastname');
+const id_num = document.getElementById('add_id_num');
+const postcode = document.getElementById('add_post_code');
+const email = document.getElementById('add_email');
+const phone = document.getElementById('add_phone');
 
-const clientsList = [{id:"1", name:"Jan", lastname:"Kowalski"}];
+const clientsList = [{id:"1", name:"Jan", lastname:"Kowalski",}];
 
 
 let db;
