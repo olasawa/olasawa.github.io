@@ -1,0 +1,35 @@
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zadanie 5</title>
+</head>
+<body>
+
+<div class="header">
+    <text>Fill form to add client:</text>
+</div>
+<div class="form">
+    <label>ID: </label> 
+    <input id="add_id" type="text" placeholder="1" pattern="[0-9]"><br><br>
+    <label>Imie: </label> 
+    <input id="add_name" type="text" placeholder="Jan" pattern="[a-zA-Z]"><br><br>
+    <label>Nazwisko: </label> 
+    <input id="add_lastname" type="text" placeholder="Kowalski" pattern="[a-zA-Z]"><br><br>
+    <button id="button" onClick=addClient()>Dodaj klienta</button>
+</div>
+<div class="list-area">
+    <ul id="list" class="list" >
+
+    </ul>
+</div>
+
+
+<br>
+<input id="delete_id" type="text" placeholder="ID">
+<button id="button" onClick=removeClient()>Usun klienta</button>
+  
+<script src="script.js"></script>
+</body>
+</html>
