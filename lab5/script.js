@@ -101,6 +101,10 @@ function addClient() {
   var postcode = document.getElementById('add_post_code').value;
   var email = document.getElementById('add_email').value;
   var phone = document.getElementById('add_phone').value;
+  if(clientID=="" || name == "" || lastname == "" || id_num == "" || postcode == "" || email == "" ||phone ==""){
+    alert("Fill with input!");
+    return;
+  }
   var request = db.transaction(["clientList"], "readwrite")
       .objectStore("clientList")
       .add({
