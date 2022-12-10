@@ -53,14 +53,15 @@ function createList(){
     if(cursor){
       clients = clients.concat(
         '<tr class="clientList">' +
-        '<td class="ID">' + cursor.value.id + '</td>' +
+        '<td class="ID">' + cursor.key + '</td>' +
         '<td class="Imie">' + cursor.value.name + '</td>' +
         '<td class="Nazwisko">' + cursor.value.lastname + '</td>' +
         '<td class="NrDow">' + cursor.value.id_num + '</td>' +
         '<td class="KodPocztowy">' + cursor.value.postcode + '</td>' +
         '<td class="Email">' + cursor.value.email + '</td>' +
         '<td class="Phone">' + cursor.value.phone + '</td>' +
-        '<td><button style="background-color:red;" onClick="deleteClient(\'' + cursor.value.id + '\')">X</button>' +
+        '<td><button style="background-color:red;" onClick="deleteClient(\'' + cursor.key + '\')">Remove</button>' +
+        '<td><button style="background-color:blue;" onClick="editClient(\'' + cursor.key + '\')">Edit</button>' +
         '</tr>');
         cursor.continue();
         
@@ -127,11 +128,11 @@ function addClient() {
       alert("Id must be unique!");
   }
 }
-
-function editClient(){
-  var clientID = document.getElementById('edit_id').value;
-
-  var objectStore = db.transaction(["clientList"], "readwrite").objectStore("clientList").get(clientID);
+var editedClientId;
+function editClient(x){
+  editedClientId = x;
+  document.getElementById('buttonSave').disabled = false;
+  var objectStore = db.transaction(["clientList"], "readwrite").objectStore("clientList").get(editedClientId);
   // var objectStoreRequest = objectStore.get(clientID);
   
   objectStore.onsuccess = function(e) {
@@ -149,13 +150,13 @@ function editClient(){
 }
 
 function saveClient(){
-  var clientID = document.getElementById('edit_id').value;
+  var clientID = editedClientId;
   var request = db.transaction(["clientList"], "readwrite")
   .objectStore("clientList")
   .delete(clientID);
 
   request.onsuccess = function (event) {
-    document.getElementById('edit_id').value="";
+    alert("Edited.");
   };
 
   request.onerror = function (event) {
@@ -163,6 +164,7 @@ function saveClient(){
   }
   document.getElementById('add_id').value = clientID;
   addClient();
+  document.getElementById('buttonSave').disabled = true;
 }
 
 function deleteClient(x) {
@@ -208,7 +210,8 @@ function searchtable() {
               '<td class="KodPocztowy">' + cursor.value.post_code + '</td>' +
               '<td class="Email">' + cursor.value.email + '</td>' +
               '<td class="Phone">' + cursor.value.phone + '</td>' +
-              '<td><button style="background-color:red;" onClick="deleteEmployee(\'' + cursor.key + '\')">X</button>' +
+              '<td><button style="background-color:red;" onClick="deleteClient(\'' + cursor.key + '\')">Remove</button>' +
+              '<td><button style="background-color:blue;" onClick="editClient(\'' + cursor.key + '\')">Edit</button>' +
               '</tr>');
           }
           cursor.continue();  
