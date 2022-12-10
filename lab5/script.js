@@ -26,8 +26,8 @@ const phone = document.getElementById('add_phone');
 const clientsList = [{id:"1", name:"Jan", lastname:"Kowalski", id_num:"ABC101010", postcode:"66-400", email:"jan@gmail.com", phone:"666-111-444"}];
 
 
-let db;
-var request = window.indexedDB.open("clientList", 10);
+var db;
+var request = window.indexedDB.open("clientList", 1);
 request.onerror = function (event) {
   console.log("error: The database is opened failed");
 };
@@ -59,28 +59,44 @@ function createListItem(contents) {
 };
 
 function createList(){
-  while (list.firstChild) {
-    list.removeChild(list.lastChild);
-  }
+  var employees = "";
+  $('.clientList').remove();
 
-  let objectStore = db.transaction("clientList").objectStore("clientList");
+  var objectStore = db.transaction("clientList").objectStore("clientList");
 
   objectStore.openCursor().onsuccess = function (event) {
     var cursor = event.target.result;
     if(cursor){
-      const id = cursor.value.id;
-      const name = cursor.value.name;
-      const lastname = cursor.value.lastname;
-      const id_num = cursor.value.id_num;
-      const postcode = cursor.value.postcode;
-      const email = cursor.value.email;
-      const phone = cursor.value.phone;
-      const elemText = `${id} — ${name}, ${lastname}, ${id_num}, ${postcode}, ${email}, ${phone}`;
-      const listItem = createListItem(elemText);
-      listItem.style.color = 'rgba(0, 0, 0, 1)';
-      list.appendChild(listItem);
-      cursor.continue();
-    }
+      // const id = cursor.value.id;
+      // const name = cursor.value.name;
+      // const lastname = cursor.value.lastname;
+      // const id_num = cursor.value.id_num;
+      // const postcode = cursor.value.postcode;
+      // const email = cursor.value.email;
+      // const phone = cursor.value.phone;
+      // const elemText = `${id} — ${name}, ${lastname}, ${id_num}, ${postcode}, ${email}, ${phone}`;
+      // const listItem = createListItem(elemText);
+      // listItem.style.color = 'rgba(0, 0, 0, 1)';
+      // list.appendChild(listItem);
+      // cursor.continue();
+      employees = employees.concat(
+        '<tr class="clientList">' +
+        '<td class="id">' + cursor.key + '</td>' +
+        '<td class="name">' + cursor.value.name + '</td>' +
+        '<td class="lastname">' + cursor.value.lastname + '</td>' +
+        '<td class="id_num">' + cursor.value.id_num + '</td>' +
+        '<td class="postcode">' + cursor.value.postcode + '</td>' +
+        '<td class="email">' + cursor.value.email + '</td>' +
+        '<td class="phone">' + cursor.value.phone + '</td>' +
+        '<td><button style="background-color:red;" onClick="deleteEmployee(\'' + cursor.key + '\')">X</button>' +
+        '</tr>');
+        
+        } 
+        else {
+          $('thead').after(employees); // no more events
+        }
+        cursor.continue();
+// }
   };
 }
 
@@ -192,6 +208,25 @@ function removeClient(){
   request.onerror = function (event) {
     alert("Id must exist in list!");
 }
+}
+
+
+function deleteEmployee(x) {
+  var clientID = x;
+  var request = db.transaction(["clientList"], "readwrite")
+      .objectStore("clientList")
+      .delete(clientID);
+
+  request.onsuccess = function (event) {
+    createList();
+    document.getElementById('add_id').value="";
+    document.getElementById('add_name').value="";
+    document.getElementById('add_lastname').value="";
+    document.getElementById('add_id_num').value="";
+    document.getElementById('add_post_code').value="";
+    document.getElementById('add_email').value="";
+    document.getElementById('add_phone').value="";
+  };
 }
 
 
