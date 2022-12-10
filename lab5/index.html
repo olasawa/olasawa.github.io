@@ -1,0 +1,57 @@
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zadanie 5</title>
+</head>
+<body>
+
+<div class="header">
+    <text>Fill form or generate client and then add client:</text>
+</div>
+<div class="form">
+    <label>ID: </label> 
+    <input type="text" id="add_id" name="id" placeholder="1" pattern="[0-9]*" required>
+    <br><br>
+    <label>Imie: </label> 
+    <input type="text" id="add_name" name="name" placeholder="Jan" pattern="[a-zA-Z]*" required>
+    <br><br>
+    <label>Nazwisko: </label>
+    <input type="text" id="add_lastname" name="lastname" placeholder="Kowalski" pattern="[a-zA-Z]*" required>
+    <br><br>
+    <label>Nr dowodu:</label>
+    <input type="text" id="add_id_num" name="id_num" placeholder="ABC101010" pattern="[A-Z]{3}[0-9]{6}" required>
+    <br><br>
+    <label>Kod pocztowy:</label>
+    <input type="text" id="add_post_code" name="post_code" placeholder="66-400" pattern="[0-9]{2}-[0-9]{3}" required>
+    <br><br>
+    <label>Email:</label>
+    <input type="email" id="add_email" name="email" placeholder="jankowalski@gmail.com" required>
+    <br><br>
+    <label>Telefon:</label>
+    <input type="tel" id="add_phone" name="phone" placeholder="601-230-100" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" required>
+    <br><br><br><br>
+    <button id="button" onClick=generateClient()>Generuj klienta (wypełnia losowymi danymi)</button>
+    <br><br>
+    <button id="button" onClick=addClient()>Dodaj klienta</button>
+    <br><br><br>
+    <label>ID klienta:</label>
+    <input id="edit_id" type="text" placeholder="1" pattern="[0-9]*" required>
+    <button id="button" onClick=editClient()>Wczytaj klienta</button>
+    <button id="button" onClick=saveClient()>Zapisz zedytowanego klienta</button>
+</div>
+<div class="list-area">
+    <div class="baza">Baza klientow:</div>
+    <ul id="list" class="list" >
+
+    </ul>
+</div>
+
+<br>
+<input id="delete_id" type="text" placeholder="1">
+<button id="button" onClick=removeClient()>Usun klienta</button>
+  
+<script src="script.js"></script>
+</body>
+</html>
