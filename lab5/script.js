@@ -17,7 +17,7 @@ const phones = ["600-111-222", "600-222-333", "600-333-444", "600-444-555", "600
 const clientsList = [{id:"1", name:"Jan", lastname:"Kowalski", id_num:"ABC101010", postcode:"66-400", email:"jan@gmail.com", phone:"666-111-444"}];
 
 
-var db;
+let db;
 var request = window.indexedDB.open("clientList", 1);
 request.onerror = function (event) {
   console.log("error: The database is opened failed");
