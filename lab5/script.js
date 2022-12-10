@@ -14,15 +14,6 @@ const emails = ["a@gmail.com", "b@gmail.com", "c@gmail.com", "d@gmail.com", "e@g
 const phones = ["600-111-222", "600-222-333", "600-333-444", "600-444-555", "600-555-666"];
 //---------------------------------------------------------------------------------------
 
-const list = document.getElementById('list');
-const id = document.getElementById('add_id');
-const name = document.getElementById('add_name');
-const lastname = document.getElementById('add_lastname');
-const id_num = document.getElementById('add_id_num');
-const postcode = document.getElementById('add_post_code');
-const email = document.getElementById('add_email');
-const phone = document.getElementById('add_phone');
-
 const clientsList = [{id:"1", name:"Jan", lastname:"Kowalski", id_num:"ABC101010", postcode:"66-400", email:"jan@gmail.com", phone:"666-111-444"}];
 
 
@@ -50,13 +41,6 @@ request.onupgradeneeded = function (event) {
 
 }
 
-function createListItem(contents) {
-  const listItem = document.createElement('li');
-  listItem.setAttribute('class', 'listelem');
-  listItem.setAttribute('draggable', 'true');
-  listItem.textContent = contents;
-  return listItem;
-};
 
 function createList(){
   var employees = "";
@@ -67,36 +51,23 @@ function createList(){
   objectStore.openCursor().onsuccess = function (event) {
     var cursor = event.target.result;
     if(cursor){
-      // const id = cursor.value.id;
-      // const name = cursor.value.name;
-      // const lastname = cursor.value.lastname;
-      // const id_num = cursor.value.id_num;
-      // const postcode = cursor.value.postcode;
-      // const email = cursor.value.email;
-      // const phone = cursor.value.phone;
-      // const elemText = `${id} — ${name}, ${lastname}, ${id_num}, ${postcode}, ${email}, ${phone}`;
-      // const listItem = createListItem(elemText);
-      // listItem.style.color = 'rgba(0, 0, 0, 1)';
-      // list.appendChild(listItem);
-      // cursor.continue();
       employees = employees.concat(
         '<tr class="clientList">' +
-        '<td class="id">' + cursor.key + '</td>' +
-        '<td class="name">' + cursor.value.name + '</td>' +
-        '<td class="lastname">' + cursor.value.lastname + '</td>' +
-        '<td class="id_num">' + cursor.value.id_num + '</td>' +
-        '<td class="postcode">' + cursor.value.postcode + '</td>' +
-        '<td class="email">' + cursor.value.email + '</td>' +
-        '<td class="phone">' + cursor.value.phone + '</td>' +
-        '<td><button style="background-color:red;" onClick="deleteEmployee(\'' + cursor.key + '\')">X</button>' +
+        '<td class="ID">' + cursor.value.id + '</td>' +
+        '<td class="Imie">' + cursor.value.name + '</td>' +
+        '<td class="Nazwisko">' + cursor.value.lastname + '</td>' +
+        '<td class="NrDow">' + cursor.value.id_num + '</td>' +
+        '<td class="KodPocztowy">' + cursor.value.postcode + '</td>' +
+        '<td class="Email">' + cursor.value.email + '</td>' +
+        '<td class="Phone">' + cursor.value.phone + '</td>' +
+        '<td><button style="background-color:red;" onClick="deleteClient(\'' + cursor.value.id + '\')">X</button>' +
         '</tr>');
+        cursor.continue();
         
         } 
         else {
-          $('thead').after(employees); // no more events
+          $('thead').after(employees);
         }
-        cursor.continue();
-// }
   };
 }
 
@@ -121,7 +92,7 @@ function generateClient(){
 }
 
 
-function addClient(){
+function addClient() {
   var clientID = document.getElementById('add_id').value ;
   var name = document.getElementById('add_name').value ;
   var lastname = document.getElementById('add_lastname').value;
@@ -156,7 +127,7 @@ function addClient(){
       alert("Id must be unique!");
   }
 }
-// var editedClientID = 0;
+
 function editClient(){
   var clientID = document.getElementById('edit_id').value;
 
@@ -194,24 +165,7 @@ function saveClient(){
   addClient();
 }
 
-function removeClient(){
-  var clientID = document.getElementById('delete_id').value;
-  var request = db.transaction(["clientList"], "readwrite")
-  .objectStore("clientList")
-  .delete(clientID);
-
-  request.onsuccess = function (event) {
-    createList();
-    document.getElementById('delete_id').value="";
-  };
-
-  request.onerror = function (event) {
-    alert("Id must exist in list!");
-}
-}
-
-
-function deleteEmployee(x) {
+function deleteClient(x) {
   var clientID = x;
   var request = db.transaction(["clientList"], "readwrite")
       .objectStore("clientList")
