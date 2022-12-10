@@ -43,7 +43,7 @@ request.onupgradeneeded = function (event) {
 
 
 function createList(){
-  var employees = "";
+  var clients = "";
   $('.clientList').remove();
 
   var objectStore = db.transaction("clientList").objectStore("clientList");
@@ -51,7 +51,7 @@ function createList(){
   objectStore.openCursor().onsuccess = function (event) {
     var cursor = event.target.result;
     if(cursor){
-      employees = employees.concat(
+      clients = clients.concat(
         '<tr class="clientList">' +
         '<td class="ID">' + cursor.value.id + '</td>' +
         '<td class="Imie">' + cursor.value.name + '</td>' +
@@ -66,7 +66,7 @@ function createList(){
         
         } 
         else {
-          $('thead').after(employees);
+          $('thead').after(clients);
         }
   };
 }
@@ -183,13 +183,42 @@ function deleteClient(x) {
   };
 }
 
+function searchtable() {
+  var clients = "";
+  $('.clientList').remove();
 
+  var objectStore = db.transaction("clientList").objectStore("clientList");
 
-
-
-
-
-
+  objectStore.openCursor().onsuccess = function (event) {
+    var cursor = event.target.result;
+    if(cursor){
+      if((cursor.value.id.toString() +
+          cursor.value.name.toLowerCase() +
+          cursor.value.lastname.toLowerCase() +
+          cursor.value.id_num.toLowerCase() + 
+          cursor.value.postcode.toString() +
+          cursor.value.email.toLowerCase() +
+          cursor.value.phone.toString()).includes($('#search').val().toLowerCase().replace(/ /g,''))){
+            clients = clients.concat(
+              '<tr class="clientList">' +
+              '<td class="ID">' + cursor.key + '</td>' +
+              '<td class="Imie">' + cursor.value.name + '</td>' +
+              '<td class="Nazwisko">' + cursor.value.lastname + '</td>' +
+              '<td class="NrDow">' + cursor.value.id_num + '</td>' +
+              '<td class="KodPocztowy">' + cursor.value.post_code + '</td>' +
+              '<td class="Email">' + cursor.value.email + '</td>' +
+              '<td class="Phone">' + cursor.value.phone + '</td>' +
+              '<td><button style="background-color:red;" onClick="deleteEmployee(\'' + cursor.key + '\')">X</button>' +
+              '</tr>');
+          }
+          cursor.continue();  
+        }
+       else{
+          $('thead').after(clients);
+           } 
+                   
+    };
+}
 
 
 
