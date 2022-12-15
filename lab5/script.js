@@ -18,7 +18,7 @@ const clientsList = [{id:"1", name:"Jan", lastname:"Kowalski", id_num:"ABC101010
 
 
 let db;
-var request = window.indexedDB.open("clientList", 1);
+var request = window.indexedDB.open("clientList", 10);
 request.onerror = function (event) {
   console.log("error: The database is opened failed");
 };
