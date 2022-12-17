@@ -240,7 +240,7 @@ function searchtable() {
               '<td class="Email">' + cursor.value.email + '</td>' +
               '<td class="Phone">' + cursor.value.phone + '</td>' +
               '<td><button style="background-color:red;" onClick="deleteClient(\'' + cursor.key + '\')">Remove</button>' +
-              '<td><button style="background-color:blue;" onClick="editClient(\'' + cursor.key + '\')">Edit</button>' +
+              '<td><button style="background-color:blue; color:white;" onClick="editClient(\'' + cursor.key + '\')">Edit</button>' +
               '</tr>');
           }
           cursor.continue();  
@@ -251,6 +251,7 @@ function searchtable() {
                    
     };
 }
+
 
 
 
