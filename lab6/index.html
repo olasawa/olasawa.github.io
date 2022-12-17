@@ -1,0 +1,67 @@
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zadanie 6</title>
+</head>
+<body>
+
+<div class="header">
+    <text>Fill form or generate client and then add client:</text>
+</div>
+<div class="form">
+    <label>ID: </label> 
+    <input type="text" id="add_id" name="id" placeholder="1" pattern="[0-9]*" required>
+    <br><br>
+    <label>Imie: </label> 
+    <input type="text" id="add_name" name="name" placeholder="Jan" pattern="[a-zA-Z]*" required>
+    <br><br>
+    <label>Nazwisko: </label>
+    <input type="text" id="add_lastname" name="lastname" placeholder="Kowalski" pattern="[a-zA-Z]*" required>
+    <br><br>
+    <label>Nr dowodu:</label>
+    <input type="text" id="add_id_num" name="id_num" placeholder="ABC101010" pattern="[A-Z]{3}[0-9]{6}" required>
+    <br><br>
+    <label>Kod pocztowy:</label>
+    <input type="text" id="add_post_code" name="post_code" placeholder="66-400" pattern="[0-9]{2}-[0-9]{3}" required>
+    <br><br>
+    <label>Email:</label>
+    <input type="email" id="add_email" name="email" placeholder="jankowalski@gmail.com" required>
+    <br><br>
+    <label>Telefon:</label>
+    <input type="tel" id="add_phone" name="phone" placeholder="601-230-100" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" required>
+    <br><br><br><br>
+    <button id="button" onClick=generateClient()>Generuj klienta (wypełnia losowymi danymi)</button>
+    <button id="button" onClick=addClient()>Dodaj klienta</button>
+    <br><br>
+    <!-- <label>ID klienta:</label>
+    <input id="edit_id" type="text" placeholder="1" pattern="[0-9]*" required> -->
+    <!-- <button id="button" onClick=editClient()>Wczytaj klienta</button> -->
+    <button id="buttonSave" disabled onClick=saveClient()>Zapisz zedytowanego klienta</button>
+</div>
+<div class="list-area">
+    <div class="baza">Baza klientow:</div>
+    <input type="text" id="search" placeholder="Wyszukaj w bazie"></input>
+    <button onclick="searchtable()">Szukaj</button><button onclick="createList()">Refresh</button>
+    <br><br>
+    <table id="tabela">
+        <thead>
+            <th style="width:2em">ID</th>
+            <th style="width:6em">Imie</th>
+            <th style="width:6em">Nazwisko</th>
+            <th style="width:10em">Numer dowodu</th>
+            <th style="width:8em">Kod pocztowy</th>
+            <th style="width:14em">Email</th>
+            <th style="width:16em">Telefon</th>
+        </thead>
+    </table><br>
+</div>
+
+<br>
+  
+
+</body>
+</html>

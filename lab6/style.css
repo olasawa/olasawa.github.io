@@ -1,0 +1,40 @@
+input{
+    margin:10px;
+}
+input:invalid {
+    border-color:red;
+}
+input:valid{
+    border-color:green;
+}
+
+body {
+    margin: 0;
+    min-width: 250px;
+}
+
+.header {
+    background-color: #3993fb;
+    padding: 30px 40px;
+    color: white;
+    text-align: center;
+  }
+  
+.form {
+    background-color: #1e2833;
+    padding: 10px 10px;
+    color: white;
+    text-align: left;
+}
+
+
+.baza{
+    background-color: #3993fb;
+    padding: 15px 15px;
+    color: white;
+    text-align: center;
+}
+
+
+
+
