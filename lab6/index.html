@@ -44,8 +44,9 @@
 </div>
 <div class="list-area">
     <div class="baza">Baza klientow:</div>
-    <input type="text" id="search" placeholder="Wyszukaj w bazie"></input>
-    <button onclick="searchtable()">Szukaj</button><button onclick="createList()">Refresh</button>
+    <label>  Filtruj/wyszukaj:</label>
+    <input type="text" onkeyup="searchtable()" id="search" placeholder="Wyszukaj w bazie"></input>
+    <!-- <button onclick="searchtable()" >Szukaj</button><button onclick="createList()">Refresh</button> -->
     <br><br>
     <table id="tabela">
         <thead>
