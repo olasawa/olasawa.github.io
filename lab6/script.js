@@ -101,10 +101,35 @@ function addClient() {
   var postcode = document.getElementById('add_post_code').value;
   var email = document.getElementById('add_email').value;
   var phone = document.getElementById('add_phone').value;
-  if(clientID=="" || name == "" || lastname == "" || id_num == "" || postcode == "" || email == "" ||phone ==""){
-    alert("Fill with input!");
+  if(document.getElementById('add_id').validity.patternMismatch){
+    alert("Client id value invalid (does not match pattern)");
     return;
   }
+  if(document.getElementById('add_name').validity.patternMismatch){
+    alert("Name value invalid (does not match pattern)");
+    return;
+  }
+  if(document.getElementById('add_lastname').validity.patternMismatch){
+    alert("Lastname value invalid (does not match pattern)");
+    return;
+  }
+  if(document.getElementById('add_id_num').validity.patternMismatch){
+    alert("Identity card number value invalid (does not match pattern)");
+    return;
+  }
+  if(document.getElementById('add_post_code').validity.patternMismatch){
+    alert("Post code value invalid (does not match pattern)");
+    return;
+  }
+  if(document.getElementById('add_email').validity.patternMismatch){
+    alert("Email value invalid (does not match pattern)");
+    return;
+  }
+  if(document.getElementById('add_phone').validity.patternMismatch){
+    alert("Phone value invalid (does not match pattern)");
+    return;
+  }
+
   var request = db.transaction(["clientList"], "readwrite")
       .objectStore("clientList")
       .add({
@@ -134,6 +159,7 @@ function addClient() {
 }
 var editedClientId;
 function editClient(x){
+  alert("Edytuj pola w formularzu i nacisnij przycisk 'Zapisz zedytowanego klienta' ");
   editedClientId = x;
   document.getElementById('buttonSave').disabled = false;
   var objectStore = db.transaction(["clientList"], "readwrite").objectStore("clientList").get(editedClientId);
@@ -160,7 +186,6 @@ function saveClient(){
   .delete(clientID);
 
   request.onsuccess = function (event) {
-    alert("Edited.");
   };
 
   request.onerror = function (event) {
@@ -187,23 +212,6 @@ function deleteClient(x) {
     document.getElementById('add_email').value="";
     document.getElementById('add_phone').value="";
   };
-}
-function mySearchingFunction() {
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("search");
-  filter = input.value.toUpperCase();
-  tr = document.getElementClassName("clientList");
-  for (i = 0; i < tr.length-2; i++) {
-    td = tr[i].getElementsByTagName("td")[0];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    }       
-  }
 }
 
 function searchtable() {
