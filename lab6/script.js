@@ -8,13 +8,13 @@ window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.ms
 const ids = ["6","2","3","4","5"]; //replace with rand?
 const names = ["Ania", "Frania", "Jan", "Pawel", "Jakub"];
 const lastnames = ["Kot", "Nowak", "Ryba", "Gan", "Kowalski"];
-const id_nums = ["AAA111111", "BBB222222", "CCC333333", "DDD444444", "EEE555555"];
+const idnums = ["AAA111111", "BBB222222", "CCC333333", "DDD444444", "EEE555555"];
 const postcodes = ["11-222", "22-333", "33-444", "44-555", "55-666"];
 const emails = ["a@gmail.com", "b@gmail.com", "c@gmail.com", "d@gmail.com", "e@gmail.com"];
 const phones = ["600-111-222", "600-222-333", "600-333-444", "600-444-555", "600-555-666"];
 //---------------------------------------------------------------------------------------
 
-const clientsList = [{id:"1", name:"Jan", lastname:"Kowalski", id_num:"ABC101010", postcode:"66-400", email:"jan@gmail.com", phone:"666-111-444"}];
+const clientsList = [{id:"1", name:"Jan", lastname:"Kowalski", idnum:"ABC101010", postcode:"66-400", email:"jan@gmail.com", phone:"666-111-444"}];
 
 
 let db;
@@ -56,12 +56,12 @@ function createList(){
         '<td class="ID">' + cursor.key + '</td>' +
         '<td class="Imie">' + cursor.value.name + '</td>' +
         '<td class="Nazwisko">' + cursor.value.lastname + '</td>' +
-        '<td class="NrDow">' + cursor.value.id_num + '</td>' +
+        '<td class="NrDow">' + cursor.value.idnum + '</td>' +
         '<td class="KodPocztowy">' + cursor.value.postcode + '</td>' +
         '<td class="Email">' + cursor.value.email + '</td>' +
         '<td class="Phone">' + cursor.value.phone + '</td>' +
         '<td><button style="background-color:red;" onClick="deleteClient(\'' + cursor.key + '\')">Remove</button>' +
-        '<td><button style="background-color:blue;" onClick="editClient(\'' + cursor.key + '\')">Edit</button>' +
+        '<td><button style="background-color:blue; color:white" onClick="editClient(\'' + cursor.key + '\')">Edit</button>' +
         '</tr>');
         cursor.continue();
         
@@ -77,7 +77,7 @@ function generateClient(){
   var clientID = ids[random]; //replace with random
   var name = names[random];
   var lastname = lastnames[random];
-  var id_num = id_nums[random];
+  var idnum = idnums[random];
   var postcode = postcodes[random];
   var email = emails[random];
   var phone = phones[random];
@@ -85,7 +85,7 @@ function generateClient(){
   document.getElementById('add_id').value = clientID;
   document.getElementById('add_name').value = name;
   document.getElementById('add_lastname').value=lastname;
-  document.getElementById('add_id_num').value=id_num;
+  document.getElementById('add_id_num').value=idnum;
   document.getElementById('add_post_code').value=postcode;
   document.getElementById('add_email').value=email;
   document.getElementById('add_phone').value=phone;
@@ -97,7 +97,7 @@ function addClient() {
   var clientID = document.getElementById('add_id').value ;
   var name = document.getElementById('add_name').value ;
   var lastname = document.getElementById('add_lastname').value;
-  var id_num = document.getElementById('add_id_num').value;
+  var idnum = document.getElementById('add_id_num').value;
   var postcode = document.getElementById('add_post_code').value;
   var email = document.getElementById('add_email').value;
   var phone = document.getElementById('add_phone').value;
@@ -129,7 +129,7 @@ function addClient() {
     alert("Phone value invalid (does not match pattern)");
     return;
   }
-  if(clientID=="" || name == "" || lastname == "" || id_num == "" || postcode == "" || email == "" ||phone ==""){
+  if(clientID=="" || name == "" || lastname == "" || idnum == "" || postcode == "" || email == "" ||phone ==""){
     alert("Fill with input!");
     return;
   }
@@ -140,7 +140,7 @@ function addClient() {
           id: clientID,
           name: name,
           lastname: lastname,
-          id_num: id_num,
+          idnum: idnum,
           postcode: postcode,
           email: email,
           phone: phone
@@ -175,7 +175,7 @@ function editClient(x){
     document.getElementById('add_id').value=myRecord.id;
     document.getElementById('add_name').value=myRecord.name;
     document.getElementById('add_lastname').value=myRecord.lastname;
-    document.getElementById('add_id_num').value=myRecord.id_num;
+    document.getElementById('add_id_num').value=myRecord.idnum;
     document.getElementById('add_post_code').value=myRecord.postcode;
     document.getElementById('add_email').value=myRecord.email;
     document.getElementById('add_phone').value=myRecord.phone;
@@ -218,12 +218,82 @@ function deleteClient(x) {
   };
 }
 
+var oldClients = "";
+var firstSearch = true;
 function addFilter(){
   var elem = document.createElement('label');
   elem.style.margin = "10px";
-  
+  elem.setAttribute("class","filter");
   elem.innerHTML = document.getElementById('search').value; 
   document.getElementById('filters').appendChild(elem);
+
+  // var clients = "";
+  // $('.clientList').remove();
+
+  // var objectStore = db.transaction("clientList").objectStore("clientList");
+
+  // objectStore.openCursor().onsuccess = function (event) {
+  //   var cursor = event.target.result;
+  //   if(cursor){
+  //       if(firstSearch){
+  //         oldClients = clients.concat(
+  //           '<tr class="clientList">' +
+  //           '<td class="ID">' + cursor.key + '</td>' +
+  //           '<td class="Imie">' + cursor.value.name + '</td>' +
+  //           '<td class="Nazwisko">' + cursor.value.lastname + '</td>' +
+  //           '<td class="NrDow">' + cursor.value.idnum + '</td>' +
+  //           '<td class="KodPocztowy">' + cursor.value.postcode + '</td>' +
+  //           '<td class="Email">' + cursor.value.email + '</td>' +
+  //           '<td class="Phone">' + cursor.value.phone + '</td>' +
+  //           '<td><button style="background-color:red;" onClick="deleteClient(\'' + cursor.key + '\')">Remove</button>' +
+  //           '<td><button style="background-color:blue; color:white" onClick="editClient(\'' + cursor.key + '\')">Edit</button>' +
+  //           '</tr>');
+  //           firstSearch=false;
+  //       }
+  //       var x, i;
+  //       x = document.getElementById("filters");
+  //       var inc = false;
+  //       console.log(x.childNodes.length);
+  //       for (i = 0; i < x.childNodes.length; i++) {
+  //         var child = x.childNodes[i];
+  //         var text = child.innerHTML;// || child.innerText;
+  //         console.log("filtr: " +text);
+
+  //         if((cursor.value.id.toString() +
+  //         cursor.value.name.toLowerCase() +
+  //         cursor.value.lastname.toLowerCase() +
+  //         cursor.value.idnum.toLowerCase() + 
+  //         cursor.value.postcode.toString() +
+  //         cursor.value.email.toLowerCase() +
+  //         cursor.value.phone.toString()).includes(text.toLowerCase().replace(/ /g,''))){
+  //           inc=true;
+  //         }
+  //         else{
+  //           inc=false;
+  //         }
+  //         if(inc=true){
+  //           clients = clients.concat(
+  //             '<tr class="clientList">' +
+  //             '<td class="ID">' + cursor.key + '</td>' +
+  //             '<td class="Imie">' + cursor.value.name + '</td>' +
+  //             '<td class="Nazwisko">' + cursor.value.lastname + '</td>' +
+  //             '<td class="NrDow">' + cursor.value.idnum + '</td>' +
+  //             '<td class="KodPocztowy">' + cursor.value.postcode + '</td>' +
+  //             '<td class="Email">' + cursor.value.email + '</td>' +
+  //             '<td class="Phone">' + cursor.value.phone + '</td>' +
+  //             '<td><button style="background-color:red;" onClick="deleteClient(\'' + cursor.key + '\')">Remove</button>' +
+  //             '<td><button style="background-color:blue; color:white;" onClick="editClient(\'' + cursor.key + '\')">Edit</button>' +
+  //             '</tr>');
+  //         }
+  //         cursor.continue();
+  //       }
+  //       }
+  //      else{
+  //         $('thead').after(clients);
+  //       } 
+                   
+  //   };
+
 }
 
 function clearFilters(){
@@ -231,6 +301,21 @@ function clearFilters(){
   while (all.firstChild) {
     all.removeChild(all.firstChild);
   }
+  firstSearch=true;
+  // $('.clientList').remove();
+
+  // var objectStore = db.transaction("clientList").objectStore("clientList");
+
+  // objectStore.openCursor().onsuccess = function (event) {
+  //   var cursor = event.target.result;
+  //   if(cursor){
+  //       cursor.continue();
+        
+  //       } 
+  //       else {
+  //         $('thead').after(oldClients);
+  //       }
+  // };
 }
 
 
@@ -248,7 +333,7 @@ function searchtable() {
       if((cursor.value.id.toString() +
           cursor.value.name.toLowerCase() +
           cursor.value.lastname.toLowerCase() +
-          cursor.value.id_num.toLowerCase() + 
+          cursor.value.idnum.toLowerCase() + 
           cursor.value.postcode.toString() +
           cursor.value.email.toLowerCase() +
           cursor.value.phone.toString()).includes($('#search').val().toLowerCase().replace(/ /g,''))){
@@ -257,8 +342,8 @@ function searchtable() {
               '<td class="ID">' + cursor.key + '</td>' +
               '<td class="Imie">' + cursor.value.name + '</td>' +
               '<td class="Nazwisko">' + cursor.value.lastname + '</td>' +
-              '<td class="NrDow">' + cursor.value.id_num + '</td>' +
-              '<td class="KodPocztowy">' + cursor.value.post_code + '</td>' +
+              '<td class="NrDow">' + cursor.value.idnum + '</td>' +
+              '<td class="KodPocztowy">' + cursor.value.postcode + '</td>' +
               '<td class="Email">' + cursor.value.email + '</td>' +
               '<td class="Phone">' + cursor.value.phone + '</td>' +
               '<td><button style="background-color:red;" onClick="deleteClient(\'' + cursor.key + '\')">Remove</button>' +
